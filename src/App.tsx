@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Users from "./pages/Users";
 import NotFound from "./pages/NotFound";
 import UserDetail from "./pages/UserDetail";
+import Signup from "./pages/Signup";
 
 const router = createBrowserRouter([
   { element: <Layout />, children: [
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       { path: "/users", element: <Users /> },
       { path: "/users/:id", element: <UserDetail /> },
       { path: "*", element: <NotFound /> }, // <- 404
+      { path: "/signup", element: <Signup /> },
   ]},
 ]);
 

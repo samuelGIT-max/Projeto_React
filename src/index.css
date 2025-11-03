@@ -11,6 +11,11 @@
 
   /* transição suave ao trocar tema */
   transition: background-color .2s ease, color .2s ease;
+
+  /* UI kit base */
+  --radius: 14px;
+  --shadow: 0 8px 24px rgba(0,0,0,.08);
+  --shadow-sm: 0 4px 12px rgba(0,0,0,.06);
 }
 
 a {
@@ -27,44 +32,39 @@ body {
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: border-color 0.25s, background-color .2s ease, color .2s ease;
-}
-button:hover { border-color: #646cff; }
-button:focus,
-button:focus-visible { outline: 4px auto -webkit-focus-ring-color; }
-
 /* ===== Tema CLARO ===== */
 :root[data-theme="light"] {
   color-scheme: light;
   color: #213547;
   background-color: #ffffff;
+  /* Paleta */
+  --bg: #ffffff;
+  --fg: #0f172a;            /* slate-900 */
+  --muted: #475569;         /* slate-600 */
+  --card-bg: #ffffff;
+  --border: #e5e7eb;        /* gray-200 */
+  --accent: #646cff;
+  --accent-weak: #ecebff;
 }
 :root[data-theme="light"] a { color: #646cff; }
 :root[data-theme="light"] a:hover { color: #747bff; }
-:root[data-theme="light"] button { background-color: #f9f9f9; }
 
 /* ===== Tema ESCURO ===== */
 :root[data-theme="dark"] {
   color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
+  /* Paleta */
+  --bg: #0b0f1a;
+  --fg: #e6edf6;
+  --muted: #94a3b8;
+  --card-bg: #0f172a;       /* slate-900 */
+  --border: #1f2937;        /* gray-800 */
+  --accent: #8ea0ff;
+  --accent-weak: #172554;
 }
 :root[data-theme="dark"] a { color: #8ea0ff; }
 :root[data-theme="dark"] a:hover { color: #a6b1ff; }
-:root[data-theme="dark"] button { background-color: #1a1a1a; }
 
 /* (Opcional) Fallback: se nenhum data-theme estiver definido,
    use a preferência do sistema operacional */
@@ -75,7 +75,6 @@ button:focus-visible { outline: 4px auto -webkit-focus-ring-color; }
   }
   :root:not([data-theme]) a { color: #646cff; }
   :root:not([data-theme]) a:hover { color: #747bff; }
-  :root:not([data-theme]) button { background-color: #f9f9f9; }
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
@@ -84,5 +83,144 @@ button:focus-visible { outline: 4px auto -webkit-focus-ring-color; }
   }
   :root:not([data-theme]) a { color: #8ea0ff; }
   :root:not([data-theme]) a:hover { color: #a6b1ff; }
-  :root:not([data-theme]) button { background-color: #1a1a1a; }
 }
+
+/* ===== Layout geral ===== */
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+/* Container central */
+.container {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* Navbar */
+nav a {
+  padding: 6px 10px;
+  border-radius: 10px;
+  transition: background-color .2s ease, color .2s ease;
+}
+nav a:hover { background: var(--accent-weak); }
+
+/* Card */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+/* ===== Botões (moderno, sem conflitos) ===== */
+button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: .2px;
+  box-shadow: var(--shadow-sm);
+  transform: translateY(0);
+  transition: transform .08s ease, opacity .2s ease, box-shadow .2s ease, border-color .25s;
+  cursor: pointer;
+}
+button:hover { opacity: .95; box-shadow: var(--shadow); }
+button:active { transform: translateY(1px); }
+button[disabled] { opacity: .6; cursor: not-allowed; }
+button:focus,
+button:focus-visible { outline: 4px auto -webkit-focus-ring-color; }
+
+/* Inputs genéricos */
+input, select, textarea {
+  width: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+input::placeholder { color: var(--muted); }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 18%, transparent);
+}
+
+/* Form padrão */
+.form {
+  display: grid;
+  gap: 14px;
+}
+.form label {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+}
+.form .row {
+  display: flex; gap: 10px;
+}
+.form .checkbox-row {
+  display: flex; align-items: left; gap: 4px;
+}
+.form small.error {
+  color: #ef4444;           /* red-500 */
+  margin-top: 2px;
+}
+
+/* Título */
+.h1 {
+  font-size: clamp(28px, 5vw, 48px);
+  line-height: 1.1;
+  margin: 10px 0 18px;
+  text-align: left;
+}
+
+/* Botão do tema no topo (estilo mais neutro) */
+nav button {
+  background: color-mix(in oklab, var(--accent) 12%, var(--bg));
+  color: var(--fg);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+/* Checkbox alinhado à esquerda */
+.form .checkbox-row{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* <- garante à esquerda */
+  gap: 10px;
+  width: max-content;          /* não ocupa a linha toda */
+  margin: 4px 0;
+}
+
+.form .checkbox-row input{
+  margin: 0;                   /* remove offset do input */
+}
+
+.form .checkbox-row span{
+  white-space: nowrap;         /* evita quebrar em 2 linhas */
+}
+
+/* Limite de largura para formulários longos (ex.: signup) */
+.form--narrow {
+  max-width: 260px;      /* ajuste fino aqui (ex.: 480–560px) */
+  margin-inline: auto;   /* centraliza dentro do card */
+}
+
+/* Em telas pequenas, deixa 100% mesmo */
+@media (max-width: 300px) {
+  .form--narrow { max-width: 100%; }
+}
+

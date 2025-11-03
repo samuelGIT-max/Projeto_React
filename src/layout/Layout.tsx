@@ -29,6 +29,9 @@ export default function Layout() {
           >
             Users
           </NavLink>
+          <NavLink to="/signup" style={({isActive}) => ({ color: isActive ? "#646cff" : "inherit" })}>
+          Sign up
+        </NavLink>
         </div>
 
         <button onClick={toggle} title="Alternar tema">
