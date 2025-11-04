@@ -1,6 +1,6 @@
 <<<<<<< HEAD
 # Projeto_React
-Projeto React de ponta a ponta (projeto pessoal)
+Sistema Bancário React 
 =======
 # React + TypeScript + Vite
 
