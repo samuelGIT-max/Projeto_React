@@ -3,6 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { api } from "../lib/api";
+import { useEffect } from "react";
 
 const schema = z
   .object({
@@ -20,6 +21,12 @@ const schema = z
 type FormData = z.infer<typeof schema>;
 
 export default function Signup() {
+  useEffect(() => {
+    document.body.classList.add("bg-hero");
+    return () => document.body.classList.remove("bg-hero");
+  }, []);
+
+
   const {
     register,
     handleSubmit,

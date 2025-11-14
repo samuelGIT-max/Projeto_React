@@ -224,3 +224,160 @@ nav button {
   .form--narrow { max-width: 100%; }
 }
 
+/* === Backgrounds de página === */
+.bg-hero {
+  /* usa /public */
+  background: url("/bg-landing.webp") center / cover no-repeat fixed;
+  min-height: 100dvh;
+}
+
+/* overlay leve para legibilidade em cima do bg */
+.bg-hero::before {
+  content: "";
+  position: fixed; inset: 0;
+  background: color-mix(in oklab, white 6%, transparent); /* muito leve véu no claro */
+  pointer-events: none;
+}
+
+/* área logada */
+.bg-dashboard {
+  background: url("/bg-dashboard.webp") center / cover no-repeat fixed;
+  min-height: 100dvh;
+}
+
+.bg-dashboard::before {
+  content: "";
+  position: fixed; inset: 0;
+  background: transparent; /* remove darkening veil so image shows naturally */
+  pointer-events: none;
+}
+
+/* um contêiner padrão para centralizar seu conteúdo por cima do bg */
+.page-wrap {
+  position: relative;        /* fica acima do ::before */
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+/* faz o bloco ocupar 100% do viewport, mesmo se estiver dentro de um container centralizado */
+.full-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* Garantir que nada por trás force branco */
+html, body, #root {
+  height: 100%;
+  background: transparent;
+}
+
+/* O fundo global da página (usa sua imagem clara) */
+.bg-hero {
+  /* troque pelo caminho que você já está usando */
+  --hero: url("/assets/bg-hero.jpg");
+  background-image: var(--hero);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* manter a imagem sob o scroll do conteúdo */
+  background-attachment: fixed;
+}
+
+/* Deixar o topbar “flutuar” transparência por cima do BG */
+.topbar {
+  background: transparent !important;
+  /* opcional: leve vidro */
+  /* backdrop-filter: saturate(120%) blur(3px); */
+}
+
+
+/* home-bg: cria um “tapete” atrás de toda a UI */
+body.home-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;                 /* top/right/bottom/left = 0 */
+  z-index: -1;              /* fica atrás de tudo */
+  background-image: var(--hero-url);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;  /* opcional parallax */
+}
+
+/* garante que a página ocupe a altura toda e não “corte” o fundo */
+html, body, #root {
+  min-height: 100%;
+}
+
+.topbar {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* ocupa a viewport inteira quando usada numa div */
+.bg-fill {
+  min-height: 100vh;
+}
+
+/* se criou a versão escura para área logada */
+.bg-app {
+  background-image: image-set(
+    url('/bg-app.avif') type('image/avif'),
+    url('/bg-app.webp') type('image/webp'),
+    url('/bg-app.png') type('image/png')
+  );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* garante que o body ocupe a viewport */
+html, body, #root { height: 100%; }
+
+/* classe aplicada no body nas telas de auth */
+body.bg-hero {
+  background-image: image-set(
+    url('/bg-hero.avif') type('image/avif'),
+    url('/bg-hero.webp') type('image/webp'),
+    url('/bg-hero.png') type('image/png')
+  );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* opcional: efeito “paralaxe” */
+}
+
+/* ===== Overrides: usar imagens HD específicas solicitadas pelo usuário ===== */
+/* Arquivos esperados em /public: /bg-landing-hd.webp e /bg-dashboard-hd.webp */
+body.bg-hero {
+  background-color: #eef4ff; /* fallback color when image missing */
+  /* remove heavy white gradient so image keeps its original colors */
+  background-image: image-set(
+      url('/bg-landing-hd.webp') type('image/webp'),
+      url('/bg-landing.webp') type('image/webp'),
+      url('/bg-hero.webp') type('image/webp')
+    ) !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.bg-dashboard, body.bg-dashboard {
+  /* keep a light fallback color but don't overlay the image */
+  background-color: #f3f6f9;
+  background-image: image-set(
+      url('/bg-dashboard-hd.webp') type('image/webp'),
+      url('/bg-dashboard.webp') type('image/webp')
+    ) !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+
+
+

@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Modal from "../components/Modal";
+import hero from "../assets/bg-landing-hd.webp";
 
 /** Util simples p/ formatar R$ */
 const BRL = new Intl.NumberFormat("pt-BR", {
@@ -15,6 +16,18 @@ type Tx = {
 };
 
 export default function Home() {
+  useEffect(() => {
+    // ativa o fundo no body
+    document.body.classList.add("home-bg");
+    // passa a URL da imagem via CSS variable
+    document.documentElement.style.setProperty("--hero-url", `url(${hero})`);
+
+    // cleanup quando sair da Home
+    return () => {
+      document.body.classList.remove("home-bg");
+      document.documentElement.style.removeProperty("--hero-url");
+    };
+  }, []);
   // mocks de vitrine
   const [show, setShow] = useState(true);
   const [open, setOpen] = useState(false);
@@ -32,7 +45,15 @@ export default function Home() {
   );
 
   return (
-    <main className="container" style={{ display: "grid", gap: 28 }}>
+    <div className="bg-hero full-bleed" style={{
+        minHeight: "100vh",
+        backgroundImage: `url(${hero})`,
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+      }}>
+        <main className="container" style={{ display: "grid", gap: 28 }}>
       {/* HERO / BANNER */}
       <section
         className="card"
@@ -56,7 +77,7 @@ export default function Home() {
         </span>
 
         <h1 className="h1" style={{ margin: 0, textAlign: "center" }}>
-          Sistema Bancário React
+          React Bank
         </h1>
 
         <p style={{ color: "var(--muted)", marginTop: -6 }}>
@@ -324,6 +345,8 @@ export default function Home() {
         operações reais.
       </Modal>
     </main>
+    </div>
+    
   );
 }
 

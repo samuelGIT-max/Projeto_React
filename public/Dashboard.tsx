@@ -20,29 +20,7 @@ export default function Dashboard() {
   // aplica o fundo do dashboard no body enquanto estamos nesta página
   useEffect(() => {
     document.body.classList.add("bg-dashboard");
-
-    // aplica via estilo inline para garantir que a imagem em /public seja usada
-    const prev = {
-      backgroundImage: document.body.style.backgroundImage,
-      backgroundSize: document.body.style.backgroundSize,
-      backgroundPosition: document.body.style.backgroundPosition,
-      backgroundRepeat: document.body.style.backgroundRepeat,
-      backgroundAttachment: document.body.style.backgroundAttachment,
-    };
-    document.body.style.backgroundImage = "url('/bg-dashboard-hd.webp')";
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundPosition = "center";
-    document.body.style.backgroundRepeat = "no-repeat";
-    document.body.style.backgroundAttachment = "fixed";
-
-    return () => {
-      document.body.classList.remove("bg-dashboard");
-      document.body.style.backgroundImage = prev.backgroundImage;
-      document.body.style.backgroundSize = prev.backgroundSize;
-      document.body.style.backgroundPosition = prev.backgroundPosition;
-      document.body.style.backgroundRepeat = prev.backgroundRepeat;
-      document.body.style.backgroundAttachment = prev.backgroundAttachment;
-    };
+    return () => document.body.classList.remove("bg-dashboard");
   }, []);
   const [acc, setAcc] = useState<Account|null>(null);
   const [txs, setTxs] = useState<Tx[]>([]);
